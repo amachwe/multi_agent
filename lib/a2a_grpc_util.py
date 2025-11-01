@@ -19,3 +19,8 @@ def build_user_message_response(id:str, message: str) -> a2a_proto.Message:
 
     )
     return a2a_proto.SendMessageResponse(msg=message)
+
+def extract_message_role_and_parts(message: a2a_proto.Message):
+    role = message.role
+    parts = [part.text for part in message.parts]
+    return role, parts
