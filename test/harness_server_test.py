@@ -1,19 +1,27 @@
 # TEST
 from lib.harness import serve
-from lib.a2a_grpc_util import build_agent_message_response, extract_message_role_and_parts
+from lib.a2a_grpc_util import build_message_response, build_message, extract_message_role_and_parts
 from a2a_grpc.a2a_pb2_grpc import A2AServiceServicer
-from a2a_grpc.a2a_pb2 import AgentCard
-
+from a2a_grpc.a2a_pb2 import AgentCard, Message, Role
 
 class Test_A2A_Server(A2AServiceServicer):
     
     def SendMessage(self, request, context):
-        print("Test_A2A_Server received SendMessage request")
-        role, parts = extract_message_role_and_parts(request.request)
-        print("Extracted role:", role)
+        print("<<",request.request)
+        print("Test_A2A_Server received SendMessage request", Role.ROLE_USER, Role.ROLE_AGENT, Role.ROLE_UNSPECIFIED)
+        id, role, parts = extract_message_role_and_parts(request.request)
+        if role == Role.ROLE_AGENT:
+            role_name = "Agent"
+        elif role == Role.ROLE_USER:
+            role_name = "User"
+        elif role == Role.ROLE_UNSPECIFIED:
+            role_name = "Unspecified"
+
+        print("Extracted id:", id)
+        print("Extracted role:", role_name)
         print("Extracted parts:", parts)
-        return build_agent_message_response(request.message_id, "Test response from agent "+ role + "  with parts: " + ", ".join(parts))
-    
+        return build_message_response(build_message(id, Role.ROLE_AGENT,f"Test response from agent, {role_name} with parts: {''.join(parts)}"))
+
     def GetAgentCard(self, request, context):
         print("Test_A2A_Server received GetAgentCard request")
 

@@ -6,7 +6,7 @@ import logging
 
 import grpc
 from concurrent import futures
-import a2a_grpc.a2a_pb2_grpc  
+from a2a_grpc import a2a_pb2_grpc, a2a_pb2  
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -29,21 +29,20 @@ async def run_agent(app_name: str, session_id:str, user_id:str, incoming: types.
             logger.debug(f"Received response: {response}")
             return response.content
         
-def send_message(request, server_address, ):
-
+def send_message(request, server_address:str): 
+    print(">>",request)
     stub = get_agent_stub(server_address)
     response = stub.SendMessage(request)
     return response
-    
-def get_agent_card(server_address:str):
-    
+
+def get_agent_card(request:a2a_pb2.GetAgentCardRequest, server_address:str):
     stub = get_agent_stub(server_address)
-    response = stub.GetAgentCard(a2a_grpc.a2a_pb2.Empty())
+    response = stub.GetAgentCard(a2a_pb2.GetAgentCardRequest())
     return response
 
-def serve(servicer: a2a_grpc.a2a_pb2_grpc.A2AServiceServicer,port:str):
+def serve(servicer: a2a_pb2_grpc.A2AServiceServicer,port:str):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    a2a_grpc.a2a_pb2_grpc.add_A2AServiceServicer_to_server(servicer, server)
+    a2a_pb2_grpc.add_A2AServiceServicer_to_server(servicer, server)
     server.add_insecure_port(f"[::]:{port}")
     server.start()
     print(f"Server started on port {port}")
@@ -52,5 +51,5 @@ def serve(servicer: a2a_grpc.a2a_pb2_grpc.A2AServiceServicer,port:str):
 
 def get_agent_stub(server_address:str):
     channel = grpc.insecure_channel(server_address)
-    stub = a2a_grpc.A2AServiceStub(channel)
+    stub = a2a_pb2_grpc.A2AServiceStub(channel)
     return stub
