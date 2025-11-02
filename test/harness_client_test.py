@@ -7,7 +7,7 @@ from a2a_grpc.a2a_pb2 import Role
 if __name__ == "__main__":
     server_address = "localhost:50051"
     
-    # Get Agent Card
+    #Get Agent Card
     agent_card = get_agent_card(None,server_address)
     print("Agent Card:", agent_card)
     

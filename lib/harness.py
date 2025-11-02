@@ -17,7 +17,8 @@ session_service = InMemorySessionService()
 async def run_agent(app_name: str, session_id:str, user_id:str, incoming: types.Content , agent: Agent)-> types.Content:
     name = agent.name
     
-
+    current_session = await session_service.create_session(app_name=app_name, session_id=session_id, user_id=user_id)
+       
     runner = Runner(app_name=app_name, agent=agent.root_agent, session_service=session_service)
 
     async for response in runner.run_async(
@@ -30,7 +31,6 @@ async def run_agent(app_name: str, session_id:str, user_id:str, incoming: types.
             return response.content
         
 def send_message(request, server_address:str): 
-    print(">>",request)
     stub = get_agent_stub(server_address)
     response = stub.SendMessage(request)
     return response

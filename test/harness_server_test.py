@@ -7,7 +7,7 @@ from a2a_grpc.a2a_pb2 import AgentCard, Message, Role
 class Test_A2A_Server(A2AServiceServicer):
     
     def SendMessage(self, request, context):
-        print("<<",request.request)
+
         print("Test_A2A_Server received SendMessage request", Role.ROLE_USER, Role.ROLE_AGENT, Role.ROLE_UNSPECIFIED)
         id, role, parts = extract_message_role_and_parts(request.request)
         if role == Role.ROLE_AGENT:
