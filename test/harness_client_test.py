@@ -12,7 +12,7 @@ if __name__ == "__main__":
     print("Agent Card:", agent_card)
     
 
-    user_message = build_message_request(build_message("1", Role.ROLE_USER,  "Hello, Agent!"))
+    user_message = build_message_request(build_message("1", Role.ROLE_USER,input("Enter your message: ")))
     
     
     response = send_message(request=user_message, server_address=server_address)

@@ -26,8 +26,9 @@ async def run_agent(app_name: str, session_id:str, user_id:str, incoming: types.
         user_id=user_id,
         new_message=incoming
     ):
+        print(f">> Runner response: {response}<<")
         if response.is_final_response() and response.content and response.content.parts:
-            logger.debug(f"Received response: {response}")
+            print(f"Received response: {response}")
             return response.content
         
 def send_message(request, server_address:str): 
