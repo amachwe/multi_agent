@@ -2,11 +2,17 @@ from google.adk.runners import Runner
 from google.adk.agents import Agent
 from google.adk.sessions import Session, InMemorySessionService
 import google.genai.types as types
+
+from langgraph.graph import StateGraph
+
+
 import logging
 
 import grpc
 from concurrent import futures
-from a2a_grpc import a2a_pb2_grpc, a2a_pb2  
+from a2a_grpc import a2a_pb2_grpc, a2a_pb2
+from lib import a2a_grpc_util 
+import asyncio
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -14,22 +20,40 @@ logger.setLevel(logging.INFO)
 session_service = InMemorySessionService()
 
 
-async def run_agent(app_name: str, session_id:str, user_id:str, incoming: types.Content , agent: Agent)-> types.Content:
-    name = agent.name
+def run_adk_agent(app_name: str, session_id:str, user_id:str, incoming: types.Content , agent: Agent)-> types.Content:
     
-    current_session = await session_service.create_session(app_name=app_name, session_id=session_id, user_id=user_id)
-       
-    runner = Runner(app_name=app_name, agent=agent.root_agent, session_service=session_service)
+    async def inner():
+        name = agent.name
+        
+        current_session = await session_service.create_session(app_name=app_name, session_id=session_id, user_id=user_id)
+        #agent / llm error handling
+        runner = Runner(app_name=app_name, agent=agent.root_agent, session_service=session_service)
 
-    async for response in runner.run_async(
-        session_id=session_id,
-        user_id=user_id,
-        new_message=incoming
-    ):
-        print(f">> Runner response: {response}<<")
-        if response.is_final_response() and response.content and response.content.parts:
-            print(f"Received response: {response}")
-            return response.content
+        async for response in runner.run_async(
+            session_id=session_id,
+            user_id=user_id,
+            new_message=incoming
+        ):
+            print(f">> Runner response: {response}<<")
+            if response.is_final_response() and response.content and response.content.parts:
+                print(f"Received response: {response}")
+                return response.content
+    return asyncio.run(inner())
+
+def run_lg_agent(app_name: str, session_id:str, user_id:str, incoming: types.Content , graph: StateGraph)-> types.Content:
+
+    #add something for session/state management
+    compiled = graph.compile()
+    print("Incoming:", incoming)
+    if incoming.role == a2a_grpc_util.CONTENT_ROLE_HUMAN:
+        request = {
+            "request":incoming.parts[0].text
+        }
+        response = compiled.invoke(request)
+        print(f"Received response: {response}")
+
+        content = types.Content(role=a2a_grpc_util.CONTENT_ROLE_AGENT, parts=[types.Part(text=response.get("response","NO AGENT RESPONSE"))])
+        return content
         
 def send_message(request, server_address:str): 
     stub = get_agent_stub(server_address)
