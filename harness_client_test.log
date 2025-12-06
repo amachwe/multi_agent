@@ -1,16 +1,16 @@
-2025-12-06 19:23:32,914 - __main__ - INFO - Agent Card: name: "MainAgent"
+2025-12-06 22:22:58,362 - __main__ - INFO - Agent Card: name: "MainAgent"
 description: "This is the main agent handling requests."
 
-2025-12-06 19:23:36,750 - __main__ - INFO - Metadata: fields {
+2025-12-06 22:23:05,392 - __main__ - INFO - Metadata: fields {
   key: "user_id"
   value {
-    string_value: "88"
+    string_value: "9"
   }
 }
 fields {
   key: "session_id"
   value {
-    string_value: "5050"
+    string_value: "8650"
   }
 }
 fields {
@@ -20,51 +20,24 @@ fields {
   }
 }
 
-2025-12-06 19:23:45,189 - __main__ - INFO - >> msg {
+2025-12-06 22:23:29,945 - __main__ - INFO - >> msg {
   message_id: "1"
   role: ROLE_AGENT
   parts {
-    text: "The sum of 89 and 34 is 123."
+    text: "The result of 5 multiplied by 78 is 390."
   }
 }
 
-2025-12-06 19:23:58,712 - __main__ - INFO - Metadata: fields {
+2025-12-06 22:23:49,372 - __main__ - INFO - Metadata: fields {
   key: "user_id"
   value {
-    string_value: "88"
+    string_value: "9"
   }
 }
 fields {
   key: "session_id"
   value {
-    string_value: "5050"
-  }
-}
-fields {
-  key: "agent_name"
-  value {
-    string_value: "lg_greeter"
-  }
-}
-
-2025-12-06 19:24:06,183 - __main__ - INFO - >> msg {
-  message_id: "2"
-  role: ROLE_AGENT
-  parts {
-    text: "You just asked, \"what is 89+34?\""
-  }
-}
-
-2025-12-06 19:24:09,330 - __main__ - INFO - Metadata: fields {
-  key: "user_id"
-  value {
-    string_value: "88"
-  }
-}
-fields {
-  key: "session_id"
-  value {
-    string_value: "5050"
+    string_value: "8650"
   }
 }
 fields {
@@ -74,11 +47,65 @@ fields {
   }
 }
 
-2025-12-06 19:24:21,560 - __main__ - INFO - >> msg {
+2025-12-06 22:23:56,776 - __main__ - INFO - >> msg {
+  message_id: "2"
+  role: ROLE_AGENT
+  parts {
+    text: "You just asked \"what is 5*78\"."
+  }
+}
+
+2025-12-06 22:24:00,025 - __main__ - INFO - Metadata: fields {
+  key: "user_id"
+  value {
+    string_value: "9"
+  }
+}
+fields {
+  key: "session_id"
+  value {
+    string_value: "8650"
+  }
+}
+fields {
+  key: "agent_name"
+  value {
+    string_value: "lg_greeter"
+  }
+}
+
+2025-12-06 22:24:12,908 - __main__ - INFO - >> msg {
   message_id: "3"
   role: ROLE_AGENT
   parts {
-    text: "You asked the following questions in this session:\n\n1.  \"what is 89+34\"\n2.  \"what did I just ask?\"\n3.  \"what questions did I ask in this session?\""
+    text: "You just asked \"what did I just ask?\""
+  }
+}
+
+2025-12-06 22:24:18,507 - __main__ - INFO - Metadata: fields {
+  key: "user_id"
+  value {
+    string_value: "9"
+  }
+}
+fields {
+  key: "session_id"
+  value {
+    string_value: "8650"
+  }
+}
+fields {
+  key: "agent_name"
+  value {
+    string_value: "adk_greeter"
+  }
+}
+
+2025-12-06 22:24:37,809 - __main__ - INFO - >> msg {
+  message_id: "4"
+  role: ROLE_AGENT
+  parts {
+    text: "This session, we\'ve discussed:\n\n1.  The result of **5 multiplied by 78**, which is 390.\n2.  You then asked **what you had just asked**, and I confirmed your previous question.\n3.  You repeated the question **\"what did I just ask?\"**, and I again confirmed it."
   }
 }
 

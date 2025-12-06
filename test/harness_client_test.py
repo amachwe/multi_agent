@@ -27,7 +27,7 @@ if __name__ == "__main__":
     logger.info(f"Agent Card: {agent_card}")
 
     metadata = struct_pb2.Struct()
-    agent_directory = ["lg_greeter","adk_greeter"]
+    agent_registry = ["lg_greeter","adk_greeter"]
 
     
     while True:
@@ -36,7 +36,9 @@ if __name__ == "__main__":
         if index == -1:
             print("Bye. Thank you..")
             break
-        metadata.update({"agent_name": agent_directory[index], "session_id":session_id, "user_id":user_id})
+
+        # metadata for the router so that the correct agent is selected.
+        metadata.update({"agent_name": agent_registry[index], "session_id":session_id, "user_id":user_id})
 
         logger.info(f"Metadata: {metadata}")
 

@@ -1,0 +1,53 @@
+2025-12-06 22:22:56,199 - lib.harness - INFO - Server started on port 50051
+2025-12-06 22:23:14,634 - lib.harness - INFO - Incoming: parts=[Part(
+  text='what is 5*78'
+)] role='user'
+2025-12-06 22:23:29,942 - lib.harness - INFO - Received response: {'request': 'what is 5*78', 'memory_snapshot': 'user: what is 5*78\n', 'response': 'The result of 5 multiplied by 78 is 390.'}
+2025-12-06 22:23:55,043 - lib.harness - INFO - Creating session with state: {'memory_snapshot': 'user: what is 5*78\n\nagent: The result of 5 multiplied by 78 is 390.\n\nuser: what did I just ask\n'}
+2025-12-06 22:23:56,770 - lib.harness - INFO - Received response: content=Content(
+  parts=[
+    Part(
+      text='You just asked "what is 5*78".'
+    ),
+  ],
+  role='model'
+) grounding_metadata=None partial=None turn_complete=None finish_reason=<FinishReason.STOP: 'STOP'> error_code=None error_message=None interrupted=None custom_metadata=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=12,
+  prompt_token_count=123,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=123
+    ),
+  ],
+  thoughts_token_count=92,
+  total_token_count=227
+) live_session_resumption_update=None input_transcription=None output_transcription=None invocation_id='e-f30d6618-7b6c-4dc8-8ad0-f57cd0c8e492' author='Lead_Agent' actions=EventActions(skip_summarization=None, state_delta={}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}) long_running_tool_ids=None branch=None id='68495df6-9ce3-4ada-8958-fade31ff750a' timestamp=1765059835.045257
+2025-12-06 22:24:04,991 - lib.harness - INFO - Incoming: parts=[Part(
+  text='what did I just ask?'
+)] role='user'
+2025-12-06 22:24:12,907 - lib.harness - INFO - Received response: {'request': 'what did I just ask?', 'memory_snapshot': 'user: what is 5*78\n\nagent: The result of 5 multiplied by 78 is 390.\n\nuser: what did I just ask\n\nagent: You just asked "what is 5*78".\n\nuser: what did I just ask?\n', 'response': 'You just asked "what did I just ask?"'}
+2025-12-06 22:24:35,104 - lib.harness - INFO - Creating session with state: {'memory_snapshot': 'user: what is 5*78\n\nagent: The result of 5 multiplied by 78 is 390.\n\nuser: what did I just ask\n\nagent: You just asked "what is 5*78".\n\nuser: what did I just ask?\n\nagent: You just asked "what did I just ask?"\n\nuser: and what have we spoken about this sessions\n'}
+2025-12-06 22:24:37,804 - lib.harness - INFO - Received response: content=Content(
+  parts=[
+    Part(
+      text="""This session, we've discussed:
+
+1.  The result of **5 multiplied by 78**, which is 390.
+2.  You then asked **what you had just asked**, and I confirmed your previous question.
+3.  You repeated the question **"what did I just ask?"**, and I again confirmed it."""
+    ),
+  ],
+  role='model'
+) grounding_metadata=None partial=None turn_complete=None finish_reason=<FinishReason.STOP: 'STOP'> error_code=None error_message=None interrupted=None custom_metadata=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=74,
+  prompt_token_count=174,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=174
+    ),
+  ],
+  thoughts_token_count=199,
+  total_token_count=447
+) live_session_resumption_update=None input_transcription=None output_transcription=None invocation_id='e-aa60ae24-5562-4c59-8905-d16ab747dc23' author='Lead_Agent' actions=EventActions(skip_summarization=None, state_delta={}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}) long_running_tool_ids=None branch=None id='ec3a04ce-754e-4262-b69d-bf2994f86bd3' timestamp=1765059875.104938

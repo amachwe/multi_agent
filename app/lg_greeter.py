@@ -37,7 +37,7 @@ def say_hi(state: State)->State:
         state.response = "I'm sorry, I couldn't process your request."
     return state
 
-
+#build the LG Graph - a single interaction more like an LLM call - no agents here... just pretending to be one!
 graph.add_node(say_hi)
 graph.add_edge(START, "say_hi")
 graph.add_edge("say_hi",END)
@@ -49,7 +49,7 @@ def get_lg_greeter()->StateGraph:
 
 if __name__ == "__main__":
 
-    request = State(request="Azahar")
+    request = State(request="what is 2+2?") 
     print(graph.compile().invoke(request))
 
 
