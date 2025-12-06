@@ -4,9 +4,15 @@ import a2a_grpc.a2a_pb2 as a2a_proto
 from a2a_grpc.a2a_pb2_grpc import A2AServiceServicer
 from .main_agent import root_agent
 from google.genai.types import Content 
+import lib.memory as memory
 
 from .lg_greeter import get_lg_greeter
 from google.protobuf import json_format
+
+import logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+logging.basicConfig(level=logging.INFO, filemode='w', filename='agent_runner_server.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 EMPTY_RESPONSE = Content(role="model", parts=[])
 
@@ -24,18 +30,22 @@ def map_to_agent(name:str):
 class AgentMain(A2AServiceServicer):
 
     def SendMessage(self, request, context):
-        print("AgentMain received SendMessage request", request)
+        logger.info(f"AgentMain received SendMessage request {request}")
         content = a2a_grpc_util.map_message_to_agent_content(request.request)
-        print("Mapped content:", content,"<<")
+        logger.info(f"Mapped content: {content} <<")
         #something comes here... where we run either LG or ADK agent.
         
         metadata = json_format.MessageToDict(request.request.metadata)
         
-        agent_name = metadata.get("agent_name","<DEF>")
-        print(metadata, agent_name,"....")
+        agent_name = metadata.get("agent_name","<DEFAULT>")
+        user_id = metadata.get("user_id","X")
+        session_id = metadata.get("session_id","X")
+        logger.info(f"Metadata: {metadata}")
         agent, runner = map_to_agent(agent_name)
-        response = runner("app:main:AgentMain", "1002", "1", content, agent)
-        print(response,"<<")
+        memory.set_user_memory(user_id, session_id, content.parts[0].text)
+        response = runner("app:main:AgentMain", session_id, user_id, content, agent)
+        memory.set_agent_memory(user_id, session_id, response.parts[0].text)
+        
         if response is None:
            response = EMPTY_RESPONSE
         message = a2a_grpc_util.build_message_from_parts(request.request.message_id, a2a_proto.Role.ROLE_AGENT , a2a_grpc_util.genai_part_to_proto_part(response.parts))

@@ -1,16 +1,40 @@
 from langgraph.graph import StateGraph, START, END
+from gen_ai_web_server import llm_client
 
 import pydantic
 from typing import Dict
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# Configure file logging for lg_greeter
+file_handler = logging.FileHandler('lg_greeter.log')
+file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+logger.addHandler(file_handler)
+
+client = llm_client.Client()
 
 class State(pydantic.BaseModel):
     request: str
+    memory_snapshot: str = ""
     response: str = ""
 
 graph = StateGraph(State)
 
 def say_hi(state: State)->State:
-    state.response = state.request + "   hello!"
+    response = client.send_request(
+        prompt=[
+            
+            {"role":"user","content":f"You are a helpful assistant. User's input: {state.request}\n\n## Use the following memory context:\n{state.memory_snapshot}"}
+        ]
+    )
+    logger.info(f"LG LLM Response: {client.extract_response(response)}")
+    try:
+        state.response = client.extract_response(response)
+    except Exception as e:
+        logger.error(f"Error extracting response: {e}")
+        state.response = "I'm sorry, I couldn't process your request."
     return state
 
 

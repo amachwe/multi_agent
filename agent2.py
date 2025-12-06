@@ -1,7 +1,15 @@
 import grpc 
-import a2a_pb2_grpc as a2a_grpc
-import a2a_pb2 as a2a_proto
+from a2a_grpc import a2a_pb2_grpc as a2a_grpc
+from a2a_grpc import a2a_pb2 as a2a_proto
 import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# Configure file logging for agent2
+file_handler = logging.FileHandler('agent2.log')
+file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+logger.addHandler(file_handler)
 
 def build_agent_message_request(id:str, message: str) -> a2a_proto.Message:
     message = a2a_proto.Message(
@@ -20,11 +28,11 @@ def client_run():
         request = build_agent_message_request("agent2", message)
         response = stub.SendStreamingMessage(request)
         for part in response:
-            print(f"Agent2 received: {part}")
+            logger.info(f"Agent2 received: {part}")
 
 
 
 if __name__ == "__main__":
 
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.INFO, filemode='w', filename='agent2_main.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     client_run()

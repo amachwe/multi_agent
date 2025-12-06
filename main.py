@@ -48,7 +48,7 @@ async def call_agent(runner: Runner, current_session: Session, agent: LlmAgent, 
     #Agent has finished running - final response stored in final_response variable.
     #Get current session to presist state across calls while server is running in state_store variable.
     current_session = await session_service.get_session(app_name=app_name, session_id=session_id, user_id=user_id)
-    print("Agent responds: ", final_response)
+    logger.info(f"Agent responds: {final_response}")
     logger.debug("-------------------- Session State --------------------")
     logger.debug(current_session.state)
     logger.debug("-------------------------------------------------------")
@@ -91,14 +91,14 @@ def agent_endpoint():
    
     result = asyncio.run(main(APP_NAME, session_id, user_id, query_json))
     result = result.replace('```json','').replace('```','').strip()
-    print(result)
+    logger.info(f"Processing result: {result}")
     return flask.jsonify({"result": json.loads(result)})
     
 
 if __name__ == "__main__":
     # #Purge all memory on restart for clean testing.
     # memory.purge_all_memory(APP_NAME)
-    print("Test Mode: Starting Agent Server... all memory purged.")
+    logger.info("Test Mode: Starting Agent Server... all memory purged.")
     
     
     app.run(debug=False)

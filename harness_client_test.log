@@ -1,0 +1,84 @@
+2025-12-06 19:23:32,914 - __main__ - INFO - Agent Card: name: "MainAgent"
+description: "This is the main agent handling requests."
+
+2025-12-06 19:23:36,750 - __main__ - INFO - Metadata: fields {
+  key: "user_id"
+  value {
+    string_value: "88"
+  }
+}
+fields {
+  key: "session_id"
+  value {
+    string_value: "5050"
+  }
+}
+fields {
+  key: "agent_name"
+  value {
+    string_value: "lg_greeter"
+  }
+}
+
+2025-12-06 19:23:45,189 - __main__ - INFO - >> msg {
+  message_id: "1"
+  role: ROLE_AGENT
+  parts {
+    text: "The sum of 89 and 34 is 123."
+  }
+}
+
+2025-12-06 19:23:58,712 - __main__ - INFO - Metadata: fields {
+  key: "user_id"
+  value {
+    string_value: "88"
+  }
+}
+fields {
+  key: "session_id"
+  value {
+    string_value: "5050"
+  }
+}
+fields {
+  key: "agent_name"
+  value {
+    string_value: "lg_greeter"
+  }
+}
+
+2025-12-06 19:24:06,183 - __main__ - INFO - >> msg {
+  message_id: "2"
+  role: ROLE_AGENT
+  parts {
+    text: "You just asked, \"what is 89+34?\""
+  }
+}
+
+2025-12-06 19:24:09,330 - __main__ - INFO - Metadata: fields {
+  key: "user_id"
+  value {
+    string_value: "88"
+  }
+}
+fields {
+  key: "session_id"
+  value {
+    string_value: "5050"
+  }
+}
+fields {
+  key: "agent_name"
+  value {
+    string_value: "adk_greeter"
+  }
+}
+
+2025-12-06 19:24:21,560 - __main__ - INFO - >> msg {
+  message_id: "3"
+  role: ROLE_AGENT
+  parts {
+    text: "You asked the following questions in this session:\n\n1.  \"what is 89+34\"\n2.  \"what did I just ask?\"\n3.  \"what questions did I ask in this session?\""
+  }
+}
+
