@@ -2,6 +2,7 @@ from google.adk.agents import LlmAgent
 from google.adk.models import  LlmRequest
 from google.adk.agents.callback_context import CallbackContext
 import logging
+import yfinance
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -31,13 +32,24 @@ def before_model(callback_context: CallbackContext, llm_request: LlmRequest):
     logger.debug(f"LlmRequest: {llm_request}")
     logger.debug("----End of before model callback----")
     
+def extract_stock_info(ticker: str) -> dict:
+    """
+    Extract stock information for a given ticker symbol.
+    ticker - string ticker symbol for the stock
+    """
+    print("--- Extracting stock info ---")
+    stock = yfinance.Ticker(ticker)
+    return stock.info
+
 agent = LlmAgent(
     name="Lead_Agent",
     model=MODEL,
-    description="An agent that leads the task resoluton by coordinating with other agents.",
+    description="An agent that leads the task resoluton by using tools.",
     instruction=instructions,
-    before_model_callback=before_model
+    before_model_callback=before_model,
+    tools=[extract_stock_info]
 )
+
 
 
 root_agent = agent

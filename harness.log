@@ -51,3 +51,47 @@
   thoughts_token_count=199,
   total_token_count=447
 ) live_session_resumption_update=None input_transcription=None output_transcription=None invocation_id='e-aa60ae24-5562-4c59-8905-d16ab747dc23' author='Lead_Agent' actions=EventActions(skip_summarization=None, state_delta={}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}) long_running_tool_ids=None branch=None id='ec3a04ce-754e-4262-b69d-bf2994f86bd3' timestamp=1765059875.104938
+2025-12-08 21:48:39,563 - lib.harness - INFO - Server started on port 50051
+2025-12-08 21:48:51,209 - lib.harness - INFO - Creating session with state: {'memory_snapshot': 'user: info on ibm\n'}
+2025-12-08 21:48:58,520 - lib.harness - INFO - Received response: content=Content(
+  parts=[
+    Part(
+      text="""Here's some information on IBM (International Business Machines Corporation):
+
+**Company Overview:**
+*   **Full Name:** International Business Machines Corporation
+*   **Sector:** Technology
+*   **Industry:** Information Technology Services
+*   **Business Summary:** International Business Machines Corporation, along with its subsidiaries, provides integrated solutions and services in the Americas, Europe, the Middle East, Africa, and the Asia Pacific. It operates through Software, Consulting, Infrastructure, and Financing segments. The Software segment offers hybrid cloud and AI platforms that allow clients to realize their digital and AI transformations across the applications, data, and environments in which they operate. Its Consulting segment focuses on skills integration for strategy, experience, technology, and operations by domain and industry. The Infrastructure segment provides on-premises and cloud-based server, and storage solutions, as well as life-cycle services for hybrid cloud infrastructure deployment. Its Financing segment offers client and commercial financing, facilitates IBM clients' acquisition of hardware, software, and services. It has strategic partnerships with various companies, including hyperscalers, service providers, system integrators, and software and hardware vendors that include Adobe, Amazon Web Services, Microsoft, Oracle, Salesforce, Samsung Electronics, and SAP, among others. The company was formerly known as Computing-Tabulating-Recording Co. International Business Machines Corporation was incorporated in 1911 and is headquartered in Armonk, New York.
+
+**Key Stock Information:**
+*   **Current Price:** $309.18
+*   **Previous Close:** $307.94
+*   **Day's Range:** $308.02 - $315.3454
+*   **52 Week Range:** $214.5 - $324.9
+*   **52 Week Change:** 33.89%
+*   **Market Cap:** $289.001 Billion
+*   **Dividend Yield:** 2.18%
+
+**Company Officers:**
+*   **CEO, President & Chairman:** Mr. Arvind Krishna (Age: 61)
+*   **Executive Vice Chairman:** Mr. Gary D. Cohn (Age: 63)
+*   **CFO and Senior VP of Finance & Operations:** Mr. James J. Kavanaugh (Age: 57)
+*   **Senior VP & Chief Legal Officer:** Ms. Anne E. Robinson (Age: 53)
+*   **Senior VP of Software & Chief Commercial Officer:** Mr. Robert D. Thomas (Age: 75)""",
+      thought_signature=b'\n\x80\x03\x01r\xc8\xda|\xd2\xb3\xa8\xbf\xa1\xbe?\xa0\xf1Jj\x11CM9\xb1\xd0\x8f\x0cW\x110\x81\xf2\x07j"\xda@\x86\xbd\xe14\x9c\xaf+-:9\x03\'\xc6\xf6K\x98K\x8a.\x84\xd15\x0fAG\x1f\xa0\xe2\xaf\x0e\xeb\\e\x0c\xf0\x7f\xe7\xc5\xedm\xa1\x0f\xfc_I:\xc0Y\xe7\xcd;uk\xee,\xa9\xfb7\x9b\x96...'
+    ),
+  ],
+  role='model'
+) grounding_metadata=None partial=None turn_complete=None finish_reason=<FinishReason.STOP: 'STOP'> error_code=None error_message=None interrupted=None custom_metadata=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=537,
+  prompt_token_count=3515,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=3515
+    ),
+  ],
+  thoughts_token_count=74,
+  total_token_count=4126
+) live_session_resumption_update=None input_transcription=None output_transcription=None invocation_id='e-4c8d29c8-b7d3-47d6-b94f-b6aa0c5316fd' author='Lead_Agent' actions=EventActions(skip_summarization=None, state_delta={}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}) long_running_tool_ids=None branch=None id='ade55aac-5298-487e-9ab8-dfda66dc1bba' timestamp=1765230533.848654
