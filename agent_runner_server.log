@@ -1,123 +1,84 @@
-2025-12-08 21:50:03,612 - lib.harness - INFO - Server started on port 50051
-2025-12-08 21:50:13,797 - __main__ - INFO - AgentMain received SendMessage request request {
+2025-12-09 21:46:32,996 - lib.harness - INFO - Server started on port 50051
+2025-12-09 21:47:02,700 - __main__ - INFO - AgentMain received SendMessage request request {
   message_id: "1"
   role: ROLE_USER
   parts {
-    text: "info about ibm"
+    text: "what is 3+4"
   }
   metadata {
     fields {
       key: "user_id"
       value {
-        string_value: "97"
+        string_value: "40"
       }
     }
     fields {
       key: "session_id"
       value {
-        string_value: "3963"
+        string_value: "5271"
       }
     }
     fields {
       key: "agent_name"
       value {
-        string_value: "adk_greeter"
+        string_value: "dice"
       }
     }
   }
 }
 
-2025-12-08 21:50:13,798 - __main__ - INFO - Mapped content: parts=[Part(
-  text='info about ibm'
+2025-12-09 21:47:02,701 - __main__ - INFO - Mapped content: parts=[Part(
+  text='what is 3+4'
 )] role='user' <<
-2025-12-08 21:50:13,798 - __main__ - INFO - Metadata: {'session_id': '3963', 'user_id': '97', 'agent_name': 'adk_greeter'}
-2025-12-08 21:50:15,836 - lib.harness - INFO - Creating session with state: {'memory_snapshot': 'user: info about ibm\n'}
-2025-12-08 21:50:16,641 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
-2025-12-08 21:50:16,642 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
-2025-12-08 21:50:17,790 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
-2025-12-08 21:50:17,790 - google_genai.types - WARNING - Warning: there are non-text parts in the response: ['thought_signature', 'function_call'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
-2025-12-08 21:50:19,030 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
-2025-12-08 21:50:19,030 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
-2025-12-08 21:50:21,575 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
-2025-12-08 21:50:21,575 - google_genai.types - WARNING - Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
-2025-12-08 21:50:21,575 - lib.harness - INFO - Received response: content=Content(
-  parts=[
-    Part(
-      text="""Here's some information about International Business Machines Corporation (IBM):
+2025-12-09 21:47:02,701 - __main__ - INFO - Metadata: {'session_id': '5271', 'user_id': '40', 'agent_name': 'dice'}
+2025-12-09 21:47:06,792 - grpc._server - ERROR - Exception calling application: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+Traceback (most recent call last):
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\redis\connection.py", line 855, in connect_check_health
+    sock = self.retry.call_with_retry(
+        lambda: self._connect(), lambda error: self.disconnect(error)
+    )
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\redis\retry.py", line 116, in call_with_retry
+    return do()
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\redis\connection.py", line 856, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ~~~~~~~~~~~~~^^
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\redis\connection.py", line 1306, in _connect
+    raise err
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\redis\connection.py", line 1290, in _connect
+    sock.connect(socket_address)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
 
-**Company Overview:**
-*   **Full Name:** International Business Machines Corporation
-*   **Symbol:** IBM
-*   **Sector:** Technology
-*   **Industry:** Information Technology Services
-*   **Headquarters:** Armonk, New York, United States
-*   **Website:** https://www.ibm.com
-*   **Employees:** 270,300
+During handling of the above exception, another exception occurred:
 
-**Business Summary:**
-IBM provides integrated solutions and services globally, operating through Software, Consulting, Infrastructure, and Financing segments. They focus on hybrid cloud and AI platforms, consulting for strategy and technology, on-premises and cloud-based server and storage solutions, and financing for hardware, software, and services. IBM also has strategic partnerships with major tech companies like Adobe, Amazon Web Services, Microsoft, Oracle, Salesforce, Samsung Electronics, and SAP.
-
-**Key Financials & Stock Information (as of the latest data):**
-*   **Current Price:** $309.18
-*   **Previous Close:** $307.94
-*   **Day's Range:** $308.02 - $315.3454
-*   **52-Week Range:** $214.5 - $324.9
-*   **Market Cap:** $289.001 billion
-*   **Dividend Yield:** 2.18%
-*   **CEO, President & Chairman:** Mr. Arvind Krishna
-*   **CFO:** Mr. James J. Kavanaugh
-
-Please let me know if you need more specific details about IBM!""",
-      thought_signature=b"\n\xc4\x03\x01r\xc8\xda|mZ\xbf\xfbqN:\xcc\xefb\x96\x01\r\r-^&i>L\x12\xd9\x1b\xcfu\xec\xc01\x7fy\x04\xe1]L6x6\x19\x98\xcd\x02\xd4\x1eL\xa6\xbd\x07)j\xbar*\xab\xa0\xfc}\xa7qp\x05+\x86\xe00~\x9d\xbf\xe2\x01\xbb\x1a\x91\x11\xed\x07\xec{#\xf0t\xb4X\x85]\xc7x'L\x82...'
-    ),
-  ],
-  role='model'
-) grounding_metadata=None partial=None turn_complete=None finish_reason=<FinishReason.STOP: 'STOP'> error_code=None error_message=None interrupted=None custom_metadata=None usage_metadata=GenerateContentResponseUsageMetadata(
-  candidates_token_count=348,
-  prompt_token_count=3515,
-  prompt_tokens_details=[
-    ModalityTokenCount(
-      modality=<MediaModality.TEXT: 'TEXT'>,
-      token_count=3515
-    ),
-  ],
-  thoughts_token_count=84,
-  total_token_count=3947
-) live_session_resumption_update=None input_transcription=None output_transcription=None invocation_id='e-3e0836cd-24c4-4f8b-9804-ce1bebb7f723' author='Lead_Agent' actions=EventActions(skip_summarization=None, state_delta={}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}) long_running_tool_ids=None branch=None id='a2f5ac43-6d5f-43fe-b6be-9b74087ecce9' timestamp=1765230618.470207
-2025-12-08 21:50:28,630 - __main__ - INFO - AgentMain received SendMessage request request {
-  message_id: "2"
-  role: ROLE_USER
-  parts {
-    text: "what did i ask about"
-  }
-  metadata {
-    fields {
-      key: "user_id"
-      value {
-        string_value: "97"
-      }
-    }
-    fields {
-      key: "session_id"
-      value {
-        string_value: "3963"
-      }
-    }
-    fields {
-      key: "agent_name"
-      value {
-        string_value: "lg_greeter"
-      }
-    }
-  }
-}
-
-2025-12-08 21:50:28,630 - __main__ - INFO - Mapped content: parts=[Part(
-  text='what did i ask about'
-)] role='user' <<
-2025-12-08 21:50:28,630 - __main__ - INFO - Metadata: {'session_id': '3963', 'user_id': '97', 'agent_name': 'lg_greeter'}
-2025-12-08 21:50:28,634 - lib.harness - INFO - Incoming: parts=[Part(
-  text='what did i ask about'
-)] role='user'
-2025-12-08 21:50:46,913 - app.lg_greeter - INFO - LG LLM Response: You asked for information about IBM (International Business Machines Corporation).
-2025-12-08 21:50:46,914 - lib.harness - INFO - Received response: {'request': 'what did i ask about', 'memory_snapshot': "user: info about ibm\n\nagent: Here's some information about International Business Machines Corporation (IBM):\n\n**Company Overview:**\n*   **Full Name:** International Business Machines Corporation\n*   **Symbol:** IBM\n*   **Sector:** Technology\n*   **Industry:** Information Technology Services\n*   **Headquarters:** Armonk, New York, United States\n*   **Website:** https://www.ibm.com\n*   **Employees:** 270,300\n\n**Business Summary:**\nIBM provides integrated solutions and services globally, operating through Software, Consulting, Infrastructure, and Financing segments. They focus on hybrid cloud and AI platforms, consulting for strategy and technology, on-premises and cloud-based server and storage solutions, and financing for hardware, software, and services. IBM also has strategic partnerships with major tech companies like Adobe, Amazon Web Services, Microsoft, Oracle, Salesforce, Samsung Electronics, and SAP.\n\n**Key Financials & Stock Information (as of the latest data):**\n*   **Current Price:** $309.18\n*   **Previous Close:** $307.94\n*   **Day's Range:** $308.02 - $315.3454\n*   **52-Week Range:** $214.5 - $324.9\n*   **Market Cap:** $289.001 billion\n*   **Dividend Yield:** 2.18%\n*   **CEO, President & Chairman:** Mr. Arvind Krishna\n*   **CFO:** Mr. James J. Kavanaugh\n\nPlease let me know if you need more specific details about IBM!\n\nuser: what did i ask about\n", 'response': 'You asked for information about IBM (International Business Machines Corporation).'}
+Traceback (most recent call last):
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\grpc\_server.py", line 608, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "c:\py_code\multi_agent\app\main.py", line 47, in SendMessage
+    memory.set_user_memory(user_id, session_id, content.parts[0].text)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\py_code\multi_agent\lib\memory.py", line 19, in set_user_memory
+    save_to_memory(client_id, session_id, "user: "+ memory+"\n")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\py_code\multi_agent\lib\memory.py", line 38, in save_to_memory
+    mem = r.get(key)
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\redis\commands\core.py", line 1923, in get
+    return self.execute_command("GET", name, keys=[name])
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\redis\client.py", line 657, in execute_command
+    return self._execute_command(*args, **options)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\redis\client.py", line 663, in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\redis\utils.py", line 196, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\redis\connection.py", line 2603, in get_connection
+    connection.connect()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\redis\connection.py", line 846, in connect
+    self.connect_check_health(check_health=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\azaha\AppData\Local\Programs\Python\Python313\Lib\site-packages\redis\connection.py", line 863, in connect_check_health
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.

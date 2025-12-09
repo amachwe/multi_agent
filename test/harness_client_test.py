@@ -27,12 +27,15 @@ if __name__ == "__main__":
     logger.info(f"Agent Card: {agent_card}")
 
     metadata = struct_pb2.Struct()
-    agent_registry = ["lg_greeter","adk_greeter"]
 
+    # This can be dynamically populated based on agent cards/agent registry
+    agent_registry = ["lg_greeter","adk_greeter", "dice"]
+
+    selection_string = "\n".join([f"{i+1}. {name}" for i, name in enumerate(agent_registry)])
     
     while True:
         id_base += 1
-        index = int(input("lg_greeter (1), adk_greeter (2) your selection (0 to exit):"))-1
+        index = int(input(f"\n\n{selection_string}\nYour selection (0 to exit):"))-1
         if index == -1:
             print("Bye. Thank you..")
             break

@@ -7,6 +7,7 @@ from google.genai.types import Content
 import lib.memory as memory
 
 from .lg_greeter import get_lg_greeter
+from .dice_roller import get_dice_roller
 from google.protobuf import json_format
 
 import logging
@@ -21,6 +22,7 @@ DEFAULT_AGENT = "<DEF>"
 AGENT_MAP = {
     "adk_greeter": (root_agent, harness.run_adk_agent),
     "lg_greeter": (get_lg_greeter(), harness.run_lg_agent),
+    "dice": (get_dice_roller(), harness.run_lg_agent),  # Using LG agent for dice roller as well
     DEFAULT_AGENT: (root_agent, harness.run_adk_agent)
 }
 
