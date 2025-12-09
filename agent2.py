@@ -2,12 +2,16 @@ import grpc
 from a2a_grpc import a2a_pb2_grpc as a2a_grpc
 from a2a_grpc import a2a_pb2 as a2a_proto
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+# Ensure log directory exists
+os.makedirs('log', exist_ok=True)
+
 # Configure file logging for agent2
-file_handler = logging.FileHandler('agent2.log')
+file_handler = logging.FileHandler('log/agent2.log')
 file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(file_handler)
 
@@ -33,6 +37,6 @@ def client_run():
 
 
 if __name__ == "__main__":
-
-    logging.basicConfig(level=logging.INFO, filemode='w', filename='agent2_main.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    os.makedirs('log', exist_ok=True)
+    logging.basicConfig(level=logging.INFO, filemode='w', filename='log/agent2_main.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     client_run()

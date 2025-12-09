@@ -3,12 +3,16 @@ import a2a_grpc.a2a_pb2 as a2a_proto
 import grpc
 from concurrent import futures
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+# Ensure log directory exists
+os.makedirs('log', exist_ok=True)
+
 # Configure file logging for agent1
-file_handler = logging.FileHandler('agent1.log')
+file_handler = logging.FileHandler('log/agent1.log')
 file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(file_handler)
 
@@ -45,5 +49,6 @@ def serve(port="50051"):
     server.wait_for_termination()
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, filemode='w', filename='agent1_main.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    os.makedirs('log', exist_ok=True)
+    logging.basicConfig(level=logging.INFO, filemode='w', filename='log/agent1_main.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     serve()

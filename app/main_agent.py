@@ -3,12 +3,16 @@ from google.adk.models import  LlmRequest
 from google.adk.agents.callback_context import CallbackContext
 import logging
 import yfinance
+import os
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+# Ensure log directory exists
+os.makedirs('log', exist_ok=True)
+
 # Configure file logging for main_agent
-file_handler = logging.FileHandler('main_agent.log')
+file_handler = logging.FileHandler('log/main_agent.log')
 file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(file_handler)
 

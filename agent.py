@@ -7,9 +7,11 @@ import logging
 from typing import Optional, Dict, Any
 from google.genai import types
 import memory 
+import os
 
 NAME = "executor_agent"
-log_fh = logging.FileHandler(f'{NAME}.log')
+os.makedirs('log', exist_ok=True)
+log_fh = logging.FileHandler(f'log/{NAME}.log')
 root_logger = logging.getLogger(__name__)
 root_logger.addHandler(log_fh)
 root_logger.setLevel(logging.INFO)

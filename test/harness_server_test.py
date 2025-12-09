@@ -4,12 +4,16 @@ from lib.a2a_grpc_util import build_message_response, build_message, extract_mes
 from a2a_grpc.a2a_pb2_grpc import A2AServiceServicer
 from a2a_grpc.a2a_pb2 import AgentCard, Message, Role
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+# Ensure log directory exists
+os.makedirs('log', exist_ok=True)
+
 # Configure file logging for server test
-file_handler = logging.FileHandler('harness_server_test.log')
+file_handler = logging.FileHandler('log/harness_server_test.log')
 file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(file_handler)
 

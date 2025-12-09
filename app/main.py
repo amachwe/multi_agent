@@ -11,9 +11,14 @@ from .dice_roller import get_dice_roller
 from google.protobuf import json_format
 
 import logging
+import os
+
+# Ensure log directory exists
+os.makedirs('log', exist_ok=True)
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-logging.basicConfig(level=logging.INFO, filemode='w', filename='agent_runner_server.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, filemode='w', filename='log/agent_runner_server.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 EMPTY_RESPONSE = Content(role="model", parts=[])
 

@@ -19,7 +19,9 @@ app = flask.Flask(APP_NAME)
 CORS(app)
 
 #use debug to get detailed tracing.
-log_fh = logging.FileHandler('app.log')
+import os
+os.makedirs('log', exist_ok=True)
+log_fh = logging.FileHandler('log/app.log')
 logger = logging.getLogger(__name__)
 logger.addHandler(log_fh)
 logger.setLevel(logging.INFO)

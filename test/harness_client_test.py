@@ -7,8 +7,12 @@ import random
 import argparse
 
 import logging
+import os
 
-logging.basicConfig(level=logging.INFO, filemode='w', filename='harness_client_test.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# Ensure log directory exists
+os.makedirs('log', exist_ok=True)
+
+logging.basicConfig(level=logging.INFO, filemode='w', filename='log/harness_client_test.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":

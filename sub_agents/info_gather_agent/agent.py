@@ -8,11 +8,12 @@ import logging
 import google.genai.types as types
 from typing import Optional, Dict, Any
 import memory
-
+import os
 
 NAME = "info_gather_agent"
 
-log_fh = logging.FileHandler(f"{NAME}.log")
+os.makedirs('log', exist_ok=True)
+log_fh = logging.FileHandler(f"log/{NAME}.log")
 info_gather_logger = logging.getLogger(__name__)
 info_gather_logger.addHandler(log_fh)
 info_gather_logger.setLevel(logging.INFO)

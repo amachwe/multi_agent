@@ -13,12 +13,16 @@ from concurrent import futures
 from a2a_grpc import a2a_pb2_grpc, a2a_pb2
 from lib import a2a_grpc_util 
 import asyncio
+import os
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+# Ensure log directory exists
+os.makedirs('log', exist_ok=True)
+
 # Configure file logging for harness
-file_handler = logging.FileHandler('harness.log')
+file_handler = logging.FileHandler('log/harness.log')
 file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(file_handler)
 

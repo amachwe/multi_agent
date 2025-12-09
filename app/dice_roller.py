@@ -4,12 +4,16 @@ from gen_ai_web_server import llm_client
 import pydantic
 from typing import Dict
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-# Configure file logging for lg_greeter
-file_handler = logging.FileHandler('lg_greeter.log')
+# Ensure log directory exists
+os.makedirs('log', exist_ok=True)
+
+# Configure file logging for dice_roller
+file_handler = logging.FileHandler('log/dice_roller.log')
 file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(file_handler)
 
