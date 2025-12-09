@@ -6,3 +6,9 @@
 
 Now, for your math question: 2 + 2 equals 4.
 2025-12-09 21:41:00,964 - __main__ - INFO - Dice LLM Response: Sure, let's roll the dice for you. You rolled a 4! Now, let's solve the math problem: 2 + 2 equals 4.
+2025-12-09 21:50:25,852 - app.dice_roller - INFO - Dice LLM Response: Sure, let's roll the dice to see what number comes up. Here we go: 3
+
+Now, let's add the numbers together: 534 + 432 = 966. So, the result of the dice roll is 3, and the sum of 534 and 432 is 966.
+2025-12-09 21:50:59,708 - app.lg_greeter - INFO - LG LLM Response: You asked about the sum of 534 and 432.
+2025-12-09 21:51:49,929 - app.dice_roller - INFO - Dice LLM Response: The result of 343 minus 234 is 109. Now, let's roll a die. You got a 4!
+2025-12-09 21:52:04,342 - app.lg_greeter - INFO - LG LLM Response: You asked "what is 343-234."

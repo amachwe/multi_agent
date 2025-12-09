@@ -155,3 +155,53 @@ Please let me know if you need more specific details about IBM!""",
   text='what did I ask about'
 )] role='user'
 2025-12-09 21:50:59,711 - lib.harness - INFO - Received response: {'request': 'what did I ask about', 'memory_snapshot': "user: what is 534+432\n\nagent: Sure, let's roll the dice to see what number comes up. Here we go: 3\n\nNow, let's add the numbers together: 534 + 432 = 966. So, the result of the dice roll is 3, and the sum of 534 and 432 is 966.\n\nuser: what did I ask about\n", 'response': 'You asked about the sum of 534 and 432.'}
+2025-12-09 21:51:36,791 - lib.harness - INFO - Incoming: parts=[Part(
+  text='what is 343-234'
+)] role='user'
+2025-12-09 21:51:49,930 - lib.harness - INFO - Received response: {'request': 'what is 343-234', 'memory_snapshot': 'user: what is 343-234\n', 'response': "The result of 343 minus 234 is 109. Now, let's roll a die. You got a 4!"}
+2025-12-09 21:51:57,365 - lib.harness - INFO - Incoming: parts=[Part(
+  text='what did I ask '
+)] role='user'
+2025-12-09 21:52:04,342 - lib.harness - INFO - Received response: {'request': 'what did I ask ', 'memory_snapshot': "user: what is 343-234\n\nagent: The result of 343 minus 234 is 109. Now, let's roll a die. You got a 4!\n\nuser: what did I ask \n", 'response': 'You asked "what is 343-234."'}
+2025-12-09 21:52:25,867 - lib.harness - INFO - Creating session with state: {'memory_snapshot': 'user: what is 343-234\n\nagent: The result of 343 minus 234 is 109. Now, let\'s roll a die. You got a 4!\n\nuser: what did I ask \n\nagent: You asked "what is 343-234."\n\nuser: what was the response of the agent to my question\n'}
+2025-12-09 21:52:27,958 - lib.harness - INFO - Received response: content=Content(
+  parts=[
+    Part(
+      text='You asked "what did I ask" and the agent responded with "You asked "what is 343-234.""',
+      thought_signature=b'\n\xd5\x03\x01r\xc8\xda|\xe5q\n~\xccR\x1a\xb3\xa5\xd6\x81 J\x01\xe4\xc1\x86\xa5\xfcD\xc8\xed\xbe\x81\x1dGp\xe4\xbe\xb2(#(\xd4\x1a\xc0\xaa"\xf8A\x8d\xbf\xf6I\x16\x9ao\n{o\x07n\xdc?\xa0\x8c.\x1cm(\t,\xa2r\xbd\xe6\xa1\xf3\xac\xd1\x1b\x8d(0\xfd\xb1,\xb6F\x08\x91\xdf\xcb\x88}x\xa3;U...'
+    ),
+  ],
+  role='model'
+) grounding_metadata=None partial=None turn_complete=None finish_reason=<FinishReason.STOP: 'STOP'> error_code=None error_message=None interrupted=None custom_metadata=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=28,
+  prompt_token_count=231,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=231
+    ),
+  ],
+  thoughts_token_count=124,
+  total_token_count=383
+) live_session_resumption_update=None input_transcription=None output_transcription=None invocation_id='e-7165ecaa-7b17-4e64-98b7-c163815c51de' author='Lead_Agent' actions=EventActions(skip_summarization=None, state_delta={}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}) long_running_tool_ids=None branch=None id='729739e4-98ca-4527-9ba2-ab92ef23d8b8' timestamp=1765317145.869738
+2025-12-09 21:52:50,358 - lib.harness - INFO - Creating session with state: {'memory_snapshot': 'user: what is 343-234\n\nagent: The result of 343 minus 234 is 109. Now, let\'s roll a die. You got a 4!\n\nuser: what did I ask \n\nagent: You asked "what is 343-234."\n\nuser: what was the response of the agent to my question\n\nagent: You asked "what did I ask" and the agent responded with "You asked "what is 343-234.""\n\nuser: and what about the question before that - what was the answer \n'}
+2025-12-09 21:52:52,554 - lib.harness - INFO - Received response: content=Content(
+  parts=[
+    Part(
+      text='The answer to your question "what is 343-234" was "The result of 343 minus 234 is 109. Now, let\'s roll a die. You got a 4!".',
+      thought_signature=b'\n\xb7\x04\x01r\xc8\xda|LQc\xe4\xa5\xebm\x9e\xa0.o\x86\xa3s\xf4o=Un\xc4\xc1\xacU\xe9\x86\xa9\x8a Oo\t\xb1\xcb\x05V\xb4z%\xce#\xa2\x8f\xbcp\xbd\xae\xf8#@WBa\r\xa6\xd3\x8fb\xd2\xf1\xfd\xd7d\xf43\x14\xc3\x8b\xaf\xe3O\x89\x9e\xf5J.Nj\x89&\x9f\xd3\xa1@/[\xb7\xa4\xcd\xf8...'
+    ),
+  ],
+  role='model'
+) grounding_metadata=None partial=None turn_complete=None finish_reason=<FinishReason.STOP: 'STOP'> error_code=None error_message=None interrupted=None custom_metadata=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=52,
+  prompt_token_count=281,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=281
+    ),
+  ],
+  thoughts_token_count=170,
+  total_token_count=503
+) live_session_resumption_update=None input_transcription=None output_transcription=None invocation_id='e-73180ac5-f893-40c2-ac57-0e962ef181a8' author='Lead_Agent' actions=EventActions(skip_summarization=None, state_delta={}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}) long_running_tool_ids=None branch=None id='2f91b949-0cb2-4066-bf97-3045bbce32b4' timestamp=1765317170.360142
