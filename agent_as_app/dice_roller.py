@@ -1,7 +1,7 @@
 from langgraph.graph import StateGraph, START, END
 from gen_ai_web_server import llm_client
-from lib.server_build import run_server
-from lib.harness import run_lg_agent
+import a2a_grpc.a2a_pb2 as a2a_proto
+
 
 import pydantic
 from typing import Dict
@@ -53,10 +53,30 @@ graph.add_edge("roll_dice",END)
 def get_dice_roller()->StateGraph:
     return graph
 
+def get_agent_card()->a2a_proto.AgentCard:
+    card = a2a_proto.AgentCard(
+        name=AGENT_NAME,
+        description="A dice rolling agent that simulates rolling a 6-sided die.",
+        skills=[a2a_proto.AgentSkill(name="roll_dice", description="Roll a 6-sided die and return the result."), 
+                a2a_proto.AgentSkill(name="answer", description="Answer questions.")],
+        
+    )
+    return card
+
 
 
 if __name__ == "__main__":
-    run_server(run_lg_agent,get_dice_roller(), AGENT_NAME,  port=50052)
+    from lib.server_build import run_server, AgentPackage
+    from lib.harness import run_lg_agent
+
+
+    package = AgentPackage(
+        name=AGENT_NAME,
+        agent_code=get_dice_roller(),
+        agent_card=get_agent_card(),
+        port="50051"
+    )
+    run_server(run_lg_agent,package)
     # request = State(request="what is 2+2?") 
     # print(graph.compile().invoke(request))
 

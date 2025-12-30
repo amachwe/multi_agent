@@ -1,10 +1,12 @@
 from langgraph.graph import StateGraph, START, END
 from gen_ai_web_server import llm_client
-
+from lib.server_build import run_server
+from lib.harness import get_agent_card, run_lg_agent
 import pydantic
 from typing import Dict
 import logging
 import os
+import a2a_grpc.a2a_pb2 as a2a_proto
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -51,11 +53,29 @@ graph.add_edge("say_hi",END)
 def get_lg_greeter()->StateGraph:
     return graph
 
+def get_agent_card()->a2a_proto.AgentCard:
+    card = a2a_proto.AgentCard(
+        name=AGENT_NAME,
+        description="An agent that answers questions",
+        skills=[
+                a2a_proto.AgentSkill(name="answer", description="Answer questions.")]
+        
+    )
+    return card
 
 
 if __name__ == "__main__":
 
-    request = State(request="what is 2+2?") 
-    print(graph.compile().invoke(request))
+    from lib.server_build import run_server, AgentPackage
+    from lib.harness import run_lg_agent
+
+    package = AgentPackage(
+        name=AGENT_NAME,
+        agent_code=get_lg_greeter(),
+        agent_card=get_agent_card(),
+        port="50052"
+    )
+    
+    run_server(run_lg_agent,package)
 
 

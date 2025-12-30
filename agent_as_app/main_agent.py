@@ -4,6 +4,7 @@ from google.adk.agents.callback_context import CallbackContext
 import logging
 import yfinance
 import os
+import a2a_grpc.a2a_pb2 as a2a_proto
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -56,6 +57,29 @@ agent = LlmAgent(
     tools=[extract_stock_info]
 )
 
+def get_agent_card()->a2a_proto.AgentCard:
+    card = a2a_proto.AgentCard(
+        name=AGENT_NAME,
+        description="An agent that answers questions using Gemini 2.5 Flash model and has access to stock info tool.",
+        skills=[
+                a2a_proto.AgentSkill(name="answer", description="Answer questions."),
+                a2a_proto.AgentSkill(name="extract_stock_info", description="Extract stock information for a given ticker symbol.")]
+        
+    )
+    return card
 
 
 root_agent = agent
+
+if __name__ == "__main__":
+    from lib.server_build import run_server, AgentPackage
+    from lib.harness import run_adk_agent
+
+    package = AgentPackage(
+        name=AGENT_NAME,
+        agent_code=root_agent,
+        agent_card=get_agent_card(),
+        port="50053"
+    )
+
+    run_server(run_adk_agent, package)

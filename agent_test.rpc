@@ -1,0 +1,31 @@
+
+grpc_cli call --json_input --json_output
+
+
+{
+  message_id: "1"
+  role: ROLE_USER
+  parts {
+    text: "hi"
+  }
+  metadata {
+    fields {
+      key: "user_id"
+      value {
+        string_value: "81"
+      }
+    }
+    fields {
+      key: "session_id"
+      value {
+        string_value: "1349"
+      }
+    }
+    fields {
+      key: "agent_name"
+      value {
+        string_value: "lg_greeter"
+      }
+    }
+  }
+}

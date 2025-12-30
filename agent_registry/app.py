@@ -1,30 +1,18 @@
 from flask import Flask, request, jsonify
 from typing import List, Dict, Optional
+from pydantic import BaseModel
+import a2a_grpc.a2a_pb2 as a2a_proto
 
 app = Flask(__name__)
 
+class AgentRecord(BaseModel):
+    id: str
+    name: str
+    agent_card: a2a_proto.AgentCard
+    url: str
 
 # Sample agent data - In production, this would be a database
-agents_db = [
-    {
-        "id": "adk_greeter",
-        "requires":"ADK",
-        "description": "A greeter agent using ADK framework.",
-        "skills": ["greeting", "small talk", "user engagement"]
-    },
-    {
-        "id": "lg_greeter",
-        "requires":"LangGraph",
-        "description": "A greeter agent using LangGraph framework.",
-        "skills": ["greeting", "conversation", "user interaction"]
-    },
-    {
-        "id": "dice_roller",
-        "requires":"LangGraph",
-        "description": "An agent that rolls dice and provides results.",
-        "skills": ["random number generation", "dice rolling", "conversation"]
-    },
-]
+agents_db = []
 
 @app.route('/agent_by_id', methods=['GET'])
 def get_agent_by_id():
