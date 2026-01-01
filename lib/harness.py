@@ -37,7 +37,9 @@ def run_adk_agent(app_name: str, session_id:str, user_id:str, incoming: types.Co
         
         memory_snapshot = memory.load_from_memory(user_id, session_id)
         state = {
-            "memory_snapshot": memory_snapshot
+            "memory_snapshot": memory_snapshot,
+            "session_id": session_id,
+            "user_id": user_id
         }
         logger.debug("--------")
         logger.info(f"Creating session with state: {state}")

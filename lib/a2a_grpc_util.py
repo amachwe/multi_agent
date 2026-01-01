@@ -22,7 +22,7 @@ def genai_part_to_proto_part(part: list[Part]) -> list[a2a_proto.Part]:
     return [a2a_proto.Part(text=p.text) for p in part]
 
 def map_message_to_agent_content(message: a2a_proto.Message) -> Content:
-    parts = [part for part in message.parts]
+    parts = [Part(text=part.text) for part in message.parts]
     role = map_code_to_role(message.role)
     
 

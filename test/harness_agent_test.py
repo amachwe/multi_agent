@@ -15,6 +15,8 @@ os.makedirs('log', exist_ok=True)
 logging.basicConfig(level=logging.INFO, filemode='w', filename='log/harness_client_test.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+AGENT_REGISTRY_URL = os.getenv("AGENT_REGISTRY_URL","http://127.0.0.1:5006")
+
 
 if __name__ == "__main__":
  
@@ -30,13 +32,9 @@ if __name__ == "__main__":
     server_address = parser.parse_args().server
 
 
-
     metadata = struct_pb2.Struct()
 
 
-
-
-    
     while True:
         id_base += 1
       
