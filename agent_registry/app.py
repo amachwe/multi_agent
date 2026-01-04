@@ -1,30 +1,20 @@
 from flask import Flask, request, jsonify
-from typing import List, Dict, Optional
+from typing import List
+from pydantic import BaseModel
+
+
+import uuid
 
 app = Flask(__name__)
 
+class AgentRecord(BaseModel):
+    id: str
+    name: str
+    agent_card: dict
+    url: str
 
 # Sample agent data - In production, this would be a database
-agents_db = [
-    {
-        "id": "adk_greeter",
-        "requires":"ADK",
-        "description": "A greeter agent using ADK framework.",
-        "skills": ["greeting", "small talk", "user engagement"]
-    },
-    {
-        "id": "lg_greeter",
-        "requires":"LangGraph",
-        "description": "A greeter agent using LangGraph framework.",
-        "skills": ["greeting", "conversation", "user interaction"]
-    },
-    {
-        "id": "dice_roller",
-        "requires":"LangGraph",
-        "description": "An agent that rolls dice and provides results.",
-        "skills": ["random number generation", "dice rolling", "conversation"]
-    },
-]
+agents_db : List[AgentRecord]  = []
 
 @app.route('/agent_by_id', methods=['GET'])
 def get_agent_by_id():
@@ -67,49 +57,49 @@ def get_agent_by_id_path(agent_id):
         "agent": agent
     })
 
-@app.route('/agent_by_skills', methods=['GET'])
-def get_agent_by_skills():
-    """Get agents by skills via query parameter"""
-    skills_param = request.args.get('skills')
-    
-    if not skills_param:
-        return jsonify({
-            "error": "Missing required parameter 'skills'",
-            "message": "Please provide skills as a comma-separated query parameter"
-        }), 400
-    
-    # Parse skills (comma-separated)
-    requested_skills = [skill.strip().lower() for skill in skills_param.split(',')]
-    
-    # Find agents that have any of the requested skills
-    matching_agents = []
-    for agent in agents_db:
-        agent_skills_lower = [skill.lower() for skill in agent['skills']]
-        if any(skill in agent_skills_lower for skill in requested_skills):
-            # Add a match score based on number of matching skills
-            matches = len(set(requested_skills) & set(agent_skills_lower))
-            agent_with_score = agent.copy()
-            agent_with_score['skill_matches'] = matches
-            matching_agents.append(agent_with_score)
-    
-    # Sort by number of matching skills (highest first)
-    matching_agents.sort(key=lambda x: x['skill_matches'], reverse=True)
-    
-    return jsonify({
-        "success": True,
-        "requested_skills": requested_skills,
-        "total_matches": len(matching_agents),
-        "agents": matching_agents
-    })
+
 
 @app.route('/agents', methods=['GET'])
 def get_all_agents():
-    """Get all agents - bonus endpoint"""
+    """Get all agents"""
     return jsonify({
         "success": True,
         "total_agents": len(agents_db),
-        "agents": agents_db
+        "agents": [ agent.model_dump() for agent in agents_db ]
     })
+
+@app.route('/agents', methods=['POST'])
+def add_agent():
+    """Add a new agent"""
+    data = request.get_json()
+    
+    required_fields = [ 'name', 'agent_card', 'url']
+    for field in required_fields:
+        if field not in data:
+            return jsonify({
+                "error": "Missing required field",
+                "message": f"Field '{field}' is required"
+            }), 400
+    
+    if any(agent for agent in agents_db if agent.name == data['name']):
+        return jsonify({
+            "error": "Agent already exists",
+            "message": f"An agent with name '{data['name']}' already exists"
+        }), 409
+    new_agent = AgentRecord(
+        id=str(uuid.uuid4()),
+        name=data['name'],
+        agent_card=data['agent_card'],
+        url=data['url']
+    )
+    
+    agents_db.append(new_agent)
+    
+    return jsonify({
+        "success": True,
+        "message": "Agent added successfully",
+        "agent": new_agent.model_dump()
+    }), 201
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -136,12 +126,6 @@ def internal_error(error):
 
 if __name__ == '__main__':
     print("Starting Agent Registry API server...")
-    print("Available endpoints:")
-    print("  GET /agent_by_id?id=<agent_id>")
-    print("  GET /agent_by_id/<agent_id>") 
-    print("  GET /agent_by_skills?skills=<skill1,skill2>")
-    print("  GET /agents (bonus - get all agents)")
-    print("  GET /health (health check)")
-    print("\nServer running on http://localhost:5006")
     
-    app.run(host='0.0.0.0', port=5006, debug=True)
+    
+    app.run(host='0.0.0.0', port=5006, debug=False)
