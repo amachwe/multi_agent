@@ -12,7 +12,7 @@ import os
 # Ensure log directory exists
 os.makedirs('log', exist_ok=True)
 
-logging.basicConfig(level=logging.INFO, filemode='w', filename='log/harness_client_test.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, filemode='w', filename='log/harness_agent_test.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 AGENT_REGISTRY_URL = os.getenv("AGENT_REGISTRY_URL","http://127.0.0.1:5006")
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
 
     metadata = struct_pb2.Struct()
-
+    agent_card = get_agent_card(None, server_address)
 
     while True:
         id_base += 1
@@ -44,12 +44,12 @@ if __name__ == "__main__":
 
         logger.info(f"Metadata: {metadata}")
 
-        user_text = input("Enter your message (e to exit, g to get agent card): ")
+        user_text = input(f"\n\nConnected to: {agent_card.name} Enter your message (e to exit, g to get agent card): ")
         if user_text == "e":
             print("Bye. Thank you..")
             break
         elif user_text == "g":
-            agent_card = get_agent_card(None, server_address)
+            
             print(f"Agent Card: {agent_card}")
             continue
         

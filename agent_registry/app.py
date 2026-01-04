@@ -81,7 +81,11 @@ def add_agent():
                 "message": f"Field '{field}' is required"
             }), 400
     
-    
+    if any(agent for agent in agents_db if agent.name == data['name']):
+        return jsonify({
+            "error": "Agent already exists",
+            "message": f"An agent with name '{data['name']}' already exists"
+        }), 409
     new_agent = AgentRecord(
         id=str(uuid.uuid4()),
         name=data['name'],
