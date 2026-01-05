@@ -81,8 +81,7 @@ if __name__ == "__main__":
     package = AgentPackage(
         name=AGENT_NAME,
         agent_code=get_enemy_mover(),
-        agent_card=get_agent_card(),
-        port="50054"
+        agent_card=get_agent_card()
     )
     run_server(run_lg_agent,package)
     # request = State(request="what is 2+2?") 

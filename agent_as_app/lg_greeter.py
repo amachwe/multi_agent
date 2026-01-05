@@ -80,8 +80,7 @@ if __name__ == "__main__":
     package = AgentPackage(
         name=AGENT_NAME,
         agent_code=get_lg_greeter(),
-        agent_card=get_agent_card(),
-        port="50052"
+        agent_card=get_agent_card()
     )
     
     run_server(run_lg_agent,package)
