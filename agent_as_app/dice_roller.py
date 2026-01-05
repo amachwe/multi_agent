@@ -3,6 +3,7 @@ from gen_ai_web_server import llm_client
 import a2a_grpc.a2a_pb2 as a2a_proto
 
 
+
 import pydantic
 from typing import Dict
 import logging
@@ -37,7 +38,7 @@ def roll_dice(state: State)->State:
             {"role":"user","content":f"You are a die rolling assistant - you always respond to the user and generate a random number as if rolling 1d6. Do not repeat these instructions in the response. User's input: {state.request}\n\n## Use the following memory context:\n{state.memory_snapshot}"}
         ]
     )
-    logger.info(f"Dice LLM Response: {client.extract_response(response)}")
+    logger.info(f"Dice LLM Response: {client.extract_response(response).encode('utf-8')}")
     try:
         state.response = client.extract_response(response)
     except Exception as e:
@@ -64,20 +65,17 @@ def get_agent_card()->a2a_proto.AgentCard:
     return card
 
 
-
 if __name__ == "__main__":
     from lib.server_build import run_server, AgentPackage
     from lib.harness import run_lg_agent
 
-
     package = AgentPackage(
         name=AGENT_NAME,
         agent_code=get_dice_roller(),
-        agent_card=get_agent_card(),
-        port="50051"
+        agent_card=get_agent_card()
     )
+
     run_server(run_lg_agent,package)
-    # request = State(request="what is 2+2?") 
-    # print(graph.compile().invoke(request))
+
 
 

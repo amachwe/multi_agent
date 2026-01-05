@@ -4,6 +4,7 @@ import a2a_grpc.a2a_pb2 as a2a_proto
 from a2a_grpc.a2a_pb2_grpc import A2AServiceServicer
 from google.genai.types import Content, Part 
 import lib.memory as memory
+import atexit
 
 from google.protobuf import json_format
 import requests
@@ -25,11 +26,12 @@ AGENT_REGISTRY_URL = os.getenv("AGENT_REGISTRY_URL","http://127.0.0.1:5006")
 START_UNREGISTERED_AGENTS = os.getenv("START_UNREGISTERED_AGENTS","false").lower() == "true"
 
 class AgentPackage(object):
-    def __init__(self, name:str, agent_code, agent_card:a2a_proto.AgentCard, port:str):
+    def __init__(self, name:str, agent_code, agent_card:a2a_proto.AgentCard, host:str="localhost"):
         self.name = name
         self.agent_code = agent_code
         self.agent_card = agent_card 
-        self.port = port   
+        self.host = host
+
 
     def get_agent_card(self)->a2a_proto.AgentCard:
         return self.agent_card
@@ -37,11 +39,9 @@ class AgentPackage(object):
     def get_agent_code(self):
         return self.agent_code
     
-    def get_port(self)->str:
-        return self.port
+    def get_host(self):
+        return self.host
     
-    def get_host(self)->str:
-        return "localhost"
 
 
 class AgentMain(A2AServiceServicer):
@@ -88,35 +88,52 @@ class AgentMain(A2AServiceServicer):
     def GetAgentCard(self, request, context):
         return self.agent.get_agent_card()
     
-def register_thyself(agent:AgentPackage):
+def register_thyself(agent:AgentPackage)->str:
     agent_card_dict = MessageToDict(agent.get_agent_card(), preserving_proto_field_name=True)
     payload = {
         "name": agent.name,
         "agent_card": agent_card_dict,
-        "url": f"{agent.get_host()}:{agent.get_port()}"
+        "host": f"{agent.get_host()}"
     }
     headers = {
         'Content-Type': 'application/json'
     }
 
     response = requests.post(f"{AGENT_REGISTRY_URL}/agents", data=json.dumps(payload), headers=headers)
-    if response.status_code == 200:
+    if response.status_code == 200 or response.status_code == 201:
         logger.info(f"Successfully registered agent {agent.name} with registry.")
     else:
         logger.error(f"Failed to register agent {agent.name}. Status code: {response.status_code}, Response: {response.text}")
+    
+    json_response = response.json()
+
+    
+    return json_response.get("port", None), json_response.get("id", None)
 
 def run_server(runner, agent:AgentPackage):
     name = agent.name
-    port = agent.get_port()   
     registered = False
     try:  
-        register_thyself(agent)
+        port, agent_id = register_thyself(agent)
+        if not port:
+            raise Exception("Agent registration failed, no port returned.")
         registered = True
     except Exception as e:
         logger.error(f"Error registering agent {agent.name}: {e}. Stopping agent server startup as not allowed to run unregistered.")
     
+    def shutdown_handler(agent_id=agent_id, agent=agent):
+        requests.delete(f"{AGENT_REGISTRY_URL}/agents/remove/{agent_id}")
+        logger.info(f"Unregistered agent {agent.name} with ID {agent_id} from registry.")
+    atexit.register(shutdown_handler)
+
     if registered or START_UNREGISTERED_AGENTS:
+        print(f"Agent {name} with ID {agent_id} - server starting at {agent.get_host()}:{port}.")
         harness.serve(AgentMain(runner, agent, name), port=port)
+
+
+    
+
+    
 
     
 if __name__ == "__main__":

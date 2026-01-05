@@ -15,11 +15,11 @@ logging.basicConfig(level=logging.INFO, filemode='w', filename='log/agent_runner
 
 AGENT_REGISTRY_URL = os.getenv("AGENT_REGISTRY_URL","http://127.0.0.1:5006")
 
-def get_all_agents()->dict:
+def get_all_agents()->list:
     response = requests.get(f"{AGENT_REGISTRY_URL}/agents")
     if response.status_code == 200:
         data = response.json()
-        return data.get("agents",{})
+        return data.get("agents",[])
     else:
         logger.error(f"Failed to get agents: {response.status_code} - {response.text}")
         return {}
@@ -30,8 +30,9 @@ if __name__ == "__main__":
     print(f"Registered agents: {agents}")
 
 
+
 def build_instructions_for_agents():
-    all_agents = []
+    
 
 
     try:
@@ -42,9 +43,9 @@ def build_instructions_for_agents():
             logger.info(f"Agents available: {all_agents}")
             agent_instr = ""
             for agent in all_agents:
-                
+            
                 name = agent['agent_card']['name']
-                agent_dict[name] = agent
+                
                 description = agent['agent_card'].get('description','No description available')
                 skills = agent['agent_card'].get('skills',[])
 
@@ -54,8 +55,10 @@ def build_instructions_for_agents():
 
 
                 agent_instr += f"Agent Name: {name}; Description: {description}; Skills: {skills_instr}\n"
+
+                agent_dict[name] = agent
                 
-            
+            logger.info(f"Built agent instructions: {agent_instr}")
             return f"""
             You can also contact other agents to get information:
             {agent_instr}\n

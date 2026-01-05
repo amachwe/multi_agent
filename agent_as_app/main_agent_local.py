@@ -24,7 +24,7 @@ logger.setLevel(logging.INFO)
 # Ensure log directory exists
 os.makedirs('log', exist_ok=True)
 
-AGENT_NAME = "agent_greeter"
+AGENT_NAME = "main_agent_local"
 
 # Configure file logging for lg_greeter
 file_handler = logging.FileHandler('log/main_agent_local.log')
@@ -56,7 +56,7 @@ def contact_agent(agent_name: str, question: str) -> str:
         
         user_message = build_message_request(build_message("a2a_request_1", Role.ROLE_USER, question, metadata=metadata))
         
-        response = send_message(request=user_message, server_address=target_agent.get("url").replace("http://",""))
+        response = send_message(request=user_message, server_address=f"{target_agent.get('host')}:{target_agent.get('port')}")
         agent_response = response.msg.parts[0].text
         logger.info(f"Received response from agent {agent_name}: {agent_response}")
         return agent_response
@@ -120,8 +120,7 @@ if __name__ == "__main__":
     package = AgentPackage(
         name=AGENT_NAME,
         agent_code=get_agent(),
-        agent_card=get_agent_card(),
-        port="50056"
+        agent_card=get_agent_card()
     )
     
     run_server(run_lg_agent,package)
