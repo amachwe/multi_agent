@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 # Ensure log directory exists
 os.makedirs('log', exist_ok=True)
 
-AGENT_NAME = "greeter_agent"
+AGENT_NAME = "main_agent"
 
 
 

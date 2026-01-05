@@ -24,7 +24,7 @@ logger.setLevel(logging.INFO)
 # Ensure log directory exists
 os.makedirs('log', exist_ok=True)
 
-AGENT_NAME = "agent_greeter"
+AGENT_NAME = "main_agent_local"
 
 # Configure file logging for lg_greeter
 file_handler = logging.FileHandler('log/main_agent_local.log')
